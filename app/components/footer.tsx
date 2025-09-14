@@ -1,8 +1,10 @@
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
 
 export default function Footer() {
+  const [openSection, setOpenSection] = useState<"privacy" | "terms" | null>(null);
+
   return (
     <footer className="w-full bg-gray-800 text-white py-8 mt-10">
       <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
@@ -14,27 +16,68 @@ export default function Footer() {
 
         {/* Center: Links */}
         <div className="flex space-x-6 text-sm">
-          <Link href="/about" className="hover:text-gray-300">
+          <a
+            href="#"
+            className="hover:text-gray-300"
+            onClick={(e) => e.preventDefault()}
+          >
             About
-          </Link>
-          <Link href="/help" className="hover:text-gray-300">
+          </a>
+          <a
+            href="#"
+            className="hover:text-gray-300"
+            onClick={(e) => e.preventDefault()}
+          >
             Help / FAQ
-          </Link>
-          <Link href="/contact" className="hover:text-gray-300">
+          </a>
+          <a
+            href="#"
+            className="hover:text-gray-300"
+            onClick={(e) => e.preventDefault()}
+          >
             Contact
-          </Link>
+          </a>
         </div>
 
         {/* Right: Legal */}
         <div className="flex space-x-6 text-sm">
-          <Link href="/legal/privacy-policy" className="hover:text-gray-300">
+          <button
+            onClick={() => setOpenSection(openSection === "privacy" ? null : "privacy")}
+            className="hover:text-yellow-400 transition"
+          >
             Privacy Policy
-          </Link>
-          <Link href="/legal/terms-of-service" className="hover:text-gray-300">
+          </button>
+          <button
+            onClick={() => setOpenSection(openSection === "terms" ? null : "terms")}
+            className="hover:text-yellow-400 transition"
+          >
             Terms of Service
-          </Link>
+          </button>
         </div>
+      </div>
 
+      {/* Legal content */}
+      <div className="max-w-6xl mx-auto px-6 mt-4 space-y-4">
+        {openSection === "privacy" && (
+          <div className="bg-gray-700 p-4 rounded">
+            <h4 className="font-bold mb-2">Privacy Policy</h4>
+            <p>
+              Your privacy is important to us. We collect information only to improve your experience on our site.
+              We never share your personal data with third parties without your consent. Cookies may be used to 
+              enhance functionality and track analytics. By using our website, you agree to our privacy practices.
+            </p>
+          </div>
+        )}
+        {openSection === "terms" && (
+          <div className="bg-gray-700 p-4 rounded">
+            <h4 className="font-bold mb-2">Terms of Service</h4>
+            <p>
+              By using our website, you agree to comply with our Terms of Service. You may not use the site for illegal
+              activities or to infringe on others' rights. We reserve the right to modify these terms at any time. 
+              Continued use of the website constitutes acceptance of the updated terms.
+            </p>
+          </div>
+        )}
       </div>
     </footer>
   );
